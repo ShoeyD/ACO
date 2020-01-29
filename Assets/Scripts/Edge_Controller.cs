@@ -2,6 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public struct Edge
+{
+    public GameObject otherPillar;
+    public Vector3 pillarLocation;
+    public float edgeScent;
+    public Edge(GameObject op, Vector3 pl, float es = 1)
+    {
+        otherPillar = op;
+        pillarLocation = pl;
+        edgeScent = es;
+    }
+}
+
+
 public class Edge_Controller : MonoBehaviour
 {
     public List<GameObject> otherEdges = new List<GameObject>();
@@ -10,25 +25,29 @@ public class Edge_Controller : MonoBehaviour
     public LineRenderer tspLines;
     public Renderer ren;
     public int pointValue;
+    public float scent;
 
-	// Use this for initialization
-	void Start ()
+    public List<Edge> edges = new List<Edge>();
+
+    // Use this for initialization
+    void Start()
     {
-        RenderLine();
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        //scent = 0;
+        //RenderLine();
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         //Debug.Log("MY POSITION = " + transform.position);
         //Debug.Log("ANT'S POSITION = " + ant.transform.position);
         //if (ant.transform.position == transform.position)
         //{
-            //Debug.Log("HELL YEAH");
-            //hasBeenTraversed = true;
+        //Debug.Log("HELL YEAH");
+        //hasBeenTraversed = true;
         //}
         //RenderLine();
-	}
+    }
 
     public void RenderLine()
     {

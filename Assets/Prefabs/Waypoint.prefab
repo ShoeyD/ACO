@@ -110,7 +110,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherEdges: []
-  hasBeenTraversed: 0
   tspLines: {fileID: 120440738751922034}
   ren: {fileID: 23354879518532038}
   pointValue: 0
@@ -152,7 +151,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.1
+    widthMultiplier: 0.3
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -171,7 +170,7 @@ LineRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 0, g: 0.71693945, b: 1, a: 1}
-      key1: {r: 0.84695387, g: 0, b: 1, a: 1}
+      key1: {r: 0, g: 0.44900656, b: 1, a: 1}
       key2: {r: 1, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -179,7 +178,7 @@ LineRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 32768
+      ctime1: 65535
       ctime2: 65535
       ctime3: 0
       ctime4: 0
@@ -194,8 +193,8 @@ LineRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
-      m_NumColorKeys: 3
+      m_Mode: 1
+      m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
