@@ -10,13 +10,13 @@ public class AntMovement : MonoBehaviour
 
     public float speed = 1.0f;
     int randomDirection;
-    Vector3 newDestination;
+    public GameObject newDestination;
     public bool noMoreMoves = false;
     bool add;
 
 
 
-    public List<Vector3> beenToPlaces = new List<Vector3>();
+    public List<GameObject> beenToPlaces = new List<GameObject>();
     public float tourLength = 0.0f;
     public List<GameObject> waypoints = new List<GameObject>();
     public List<GameObject> waypointCopy = new List<GameObject>();
@@ -27,12 +27,7 @@ public class AntMovement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        newDestination = transform.position;
         waypointCopy = waypoints;
-        //beenToPlaces.Add(0);
-        //randomDirection = Random.Range(0, waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges.Count);
-        //newDestination = waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges[randomDirection].transform.position;
-        //waypointPtr = waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges[randomDirection].GetComponent<Edge_Controller>().pointValue;
     }
 
     // Update is called once per frame
@@ -46,9 +41,9 @@ public class AntMovement : MonoBehaviour
     {
         if (noMoreMoves == false)
         {
-            if (transform.position == newDestination)
+            if (transform.position == newDestination.transform.position)
             {
-                beenToPlaces.Add(transform.position);
+                beenToPlaces.Add(newDestination);
                 for (int i = 0; i < waypointCopy.Count; i++)
                 {
                     if (waypointCopy[i].transform.position == transform.position)
@@ -86,98 +81,11 @@ public class AntMovement : MonoBehaviour
                         maxValue = edgeProbabilities[i];
                     }
                 }
-                newDestination = waypointCopy[currentMax].transform.position;
-                tourLength += Vector3.Distance(newDestination, transform.position);
+                newDestination = waypointCopy[currentMax];
+                tourLength += Vector3.Distance(newDestination.transform.position, transform.position);
             }
-            transform.position = Vector3.MoveTowards(transform.position, newDestination, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, newDestination.transform.position, speed * Time.deltaTime);
+            edgeProbabilities.Clear();
         }
     }
-
-
-    //void OldMovement()
-    //{
-    //    if (transform.position == newDestination)
-    //    {
-    //        //waypoints[waypointPtr].GetComponent<Edge_Controller>().hasBeenTraversed = true;
-    //        //waypoints[waypointPtr].GetComponent<Edge_Controller>().ren.material.color = Color.red;
-
-
-
-    //        beenToPlaces.Add(waypointPtr);
-    //        //Debug.Log(waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges.Count); THIS IS CORRECT
-    //        //Debug.Log(beenToPlaces.Count); WORKS
-    //        //Debug.Log(waypointCopy.Count);
-    //        for (int i = 0; i < waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges.Count; i++)
-    //        {
-    //            add = true;
-    //            for (int j = 0; j < beenToPlaces.Count; j++)
-    //            {
-    //                if (waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges[i].GetComponent<Edge_Controller>().pointValue == beenToPlaces[j])
-    //                {
-    //                    add = false;
-    //                    j = beenToPlaces.Count;
-    //                }
-    //            }
-    //            if (add == true)
-    //            {
-    //                waypointCopy.Add(waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges[i].GetComponent<Edge_Controller>().pointValue);
-    //            }
-    //        }
-    //        //Debug.Log(waypointCopy.Count);
-    //        //for (int i = 0; i < waypointCopy.Count; i++)
-    //        //{
-    //        //    Debug.Log(waypointCopy[i]);
-    //        //}
-    //        if (waypointCopy.Count != 0)
-    //        {
-    //            randomDirection = Random.Range(0, waypointCopy.Count);
-
-    //            waypointPtr = waypointCopy[randomDirection];
-    //            //Debug.Log(waypointPtr);
-    //            newDestination = waypoints[waypointPtr].transform.position;
-    //            waypointCopy.Clear();
-    //        }
-    //        else
-    //        {
-    //            noMoreMoves = true;
-    //        }
-    //        //randomDirection = Random.Range(0, waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges.Count);
-    //        // for (int i = 0; i < beenToPlaces.Count; i++)
-    //        // {
-    //        //     if (randomDirection == beenToPlaces[i])
-    //        //     {
-    //        //
-    //        //    }
-    //        //}
-
-    //        //newDestination = waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges[randomDirection].transform.position;
-    //        //waypointPtr = waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges[randomDirection].GetComponent<Edge_Controller>().pointValue;
-
-    //    }
-    //    //if (move == true)
-    //    //{
-    //    transform.position = Vector3.MoveTowards(transform.position, newDestination, speed * Time.deltaTime);
-    //    //}
-
-
-    //    //Debug.Log("My position = " + transform.position);
-    //    //Debug.Log("My new destination = " + newDestination);
-
-
-    //    //randomDirection = Random.Range(0, waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges.Count);
-    //    //Vector3 newDestination = waypoints[waypointPtr].GetComponent<Edge_Controller>().otherEdges[randomDirection].transform.position;
-    //    //transform.position = Vector3.MoveTowards(transform.position, waypoints[randomDirection].transform.position, speed * Time.deltaTime);
-    //    //if (Vector3.Distance(transform.position, waypoints[waypointPtr].transform.position) < 0.001f)
-    //    //{
-    //    //    if (waypointPtr < waypoints.Count - 1)
-    //    //    {
-    //    //        waypointPtr++;
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        waypointPtr = 0;
-    //    //    }
-    //    //}
-
-    //}
 }

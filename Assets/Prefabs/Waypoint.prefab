@@ -109,10 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9a1a9fd5c3cff4fbf9f067cb4accac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherEdges: []
   tspLines: {fileID: 120440738751922034}
   ren: {fileID: 23354879518532038}
-  pointValue: 0
 --- !u!120 &120440738751922034
 LineRenderer:
   m_ObjectHideFlags: 1
