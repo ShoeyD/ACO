@@ -19,6 +19,8 @@ public class World_Controller : MonoBehaviour
     private List<GameObject> pillars = new List<GameObject>();
 
     public float shortestDistance = 999f;
+    private GameObject bestAnt;
+    public LineRenderer bestAntLine;
 
     // Use this for initialization
     void Start()
@@ -52,14 +54,18 @@ public class World_Controller : MonoBehaviour
                     pillars[i].GetComponent<Edge_Controller>().edges[j].edgeScent *= 0.5f;
                 }
             }
-
             int antLength = antInstances.Count;
-
             for (int i = 0; i < antLength; i++)
             {
                 if (shortestDistance > antInstances[0].GetComponent<AntMovement>().tourLength)
                 {
                     shortestDistance = antInstances[0].GetComponent<AntMovement>().tourLength;
+                    bestAnt = antInstances[0].gameObject;
+                    bestAntLine.positionCount = bestAnt.GetComponent<AntMovement>().beenToPlaces.Count;
+                    for (int j = 0; j < bestAnt.GetComponent<AntMovement>().beenToPlaces.Count; j++)
+                    {
+                        bestAntLine.SetPosition(j, bestAnt.GetComponent<AntMovement>().beenToPlaces[j].transform.position);
+                    }
                 }
                 //Add scent here
                 for (int j = 0; j < antInstances[0].GetComponent<AntMovement>().beenToPlaces.Count - 1; j++)
@@ -72,7 +78,6 @@ public class World_Controller : MonoBehaviour
                         }
                     }
                 }
-
                 Destroy(antInstances[0].gameObject);
                 antInstances.Remove(antInstances[0]);
             }
