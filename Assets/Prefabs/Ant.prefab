@@ -108,6 +108,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8d4e57d70b5ee34cab77c42878bc92f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 35
+  newDestination: {fileID: 0}
+  noMoreMoves: 0
+  beenToPlaces: []
+  tourLength: 0
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -116,5 +121,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  speed: 25
+  waypointCopy: []
+  edgeProbabilities: []
