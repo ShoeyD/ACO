@@ -162,6 +162,7 @@ public class World_Controller : MonoBehaviour
                 }
                 antAttempts = 0;
                 GameObject.Find("Number of Attempts").gameObject.GetComponent<UnityEngine.UI.Text>().text = "Number of Attempts = " + antAttempts;
+                runNN = true;
             }
         }
     }
@@ -197,6 +198,7 @@ public class World_Controller : MonoBehaviour
                 }
                 antAttempts = 0;
                 GameObject.Find("Number of Attempts").gameObject.GetComponent<UnityEngine.UI.Text>().text = "Number of Attempts = " + antAttempts;
+                runNN = true;
             }
         }
     }
@@ -298,7 +300,7 @@ public class World_Controller : MonoBehaviour
             runNN = false;
             float after = Time.realtimeSinceStartup;
             float duration = after - before;
-            GameObject.Find("NN").GetComponentInChildren<UnityEngine.UI.Text>().text = "Duration in milliseconds: " + duration;
+            GameObject.Find("NN").GetComponentInChildren<UnityEngine.UI.Text>().text = "Duration in seconds: " + duration;
             //Debug.Log("Duration in milliseconds: " + duration);
         }
     }
