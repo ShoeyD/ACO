@@ -4,23 +4,14 @@ using UnityEngine;
 
 public class AntMovement : MonoBehaviour
 {
-
-    //int waypointPtr = 0;
-    //public List<int> beenToPlaces = new List<int>();
-
     public float speed = 1.0f;
-    int randomDirection;
     public GameObject newDestination;
     public bool noMoreMoves = false;
-    bool add;
-
-
-
     public List<GameObject> beenToPlaces = new List<GameObject>();
     public float tourLength = 0.0f;
     public List<GameObject> waypoints = new List<GameObject>();
     public List<GameObject> waypointCopy = new List<GameObject>();
-    public List<float> edgeProbabilities/* = new List<float>()*/;
+    public List<float> edgeProbabilities;
     float totalEdgeProbabilities = 0.0f;
     GameObject currentPillar;
 
@@ -35,7 +26,6 @@ public class AntMovement : MonoBehaviour
     {
         ACOmovement();
     }
-
 
     void ACOmovement()
     {

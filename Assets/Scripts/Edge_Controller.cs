@@ -19,13 +19,8 @@ public class Edge
 
 public class Edge_Controller : MonoBehaviour
 {
-    //public List<GameObject> otherEdges = new List<GameObject>();
-    //public GameObject ant;
-    //public bool hasBeenTraversed;
     public LineRenderer tspLines;
     public Renderer ren;
-    //public int pointValue;
-    //public float scent;
 
     public List<Edge> edges = new List<Edge>();
 

@@ -11,7 +11,7 @@ public class World_Controller : MonoBehaviour
 
     public float constantCalledQ = 1.0f;
 
-    public int antAmount;
+    private int antAmount;
     public bool allAntsDone;
 
     Basic_TSP bTSP;
@@ -37,16 +37,14 @@ public class World_Controller : MonoBehaviour
         buttons.enabled = true;
         bTSP = new Basic_TSP(floor.GetComponent<MeshRenderer>().bounds.size);
         SpawnPillarsAndAnts();
-
-        //Debug.Log("Wrong path = " + Vector3.Distance(new Vector3(-40.0f, 0.0f, 30.0f), new Vector3(0.0f, 0.0f, 0.0f)));
-        //Debug.Log("Correct path = " + Vector3.Distance(new Vector3(-40.0f, 0.0f, 30.0f), new Vector3(10.0f, 0.0f, 40.0f)));
+        antAmount = pillars.Count;
+        GameObject.Find("Number of Pillars").gameObject.GetComponent<UnityEngine.UI.Text>().text = "Number of Pillars = " + pillars.Count;
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckAntsAreDone();
-        CalculateFPS();
         SpawnPillar();
         DestroyPillar();
     }
@@ -83,7 +81,7 @@ public class World_Controller : MonoBehaviour
                         bestAntLine.SetPosition(j, bestAnt.GetComponent<AntMovement>().beenToPlaces[j].transform.position);
                     }
                 }
-                //Add scent here
+                //Scent
                 for (int j = 0; j < antInstances[0].GetComponent<AntMovement>().beenToPlaces.Count - 1; j++)
                 {
                     for (int k = 0; k < antInstances[0].GetComponent<AntMovement>().beenToPlaces[j].GetComponent<Edge_Controller>().edges.Count; k++)
@@ -100,21 +98,14 @@ public class World_Controller : MonoBehaviour
             antAttempts++;
             GameObject.Find("Number of Attempts").gameObject.GetComponent<UnityEngine.UI.Text>().text = "Number of Attempts = " + antAttempts;
             GameObject.Find("Spawn Ants").GetComponentInChildren<UnityEngine.UI.Text>().text = "Spawn Ants";
-            //buttons.GetComponentWithTag<UnityEngine.UI.Text>().text = "Number of Attempts = " + antAttempts;
-            //buttons.enabled = true;
             pressButton = true;
+            runNN = true;
             GameObject.Find("ACO Best").GetComponentInChildren<UnityEngine.UI.Text>().text = "ACO's Best Path = " + shortestDistance;
-            //if (antLoops > 0)
-            //{
-            //    SpawnAnts();
-            //    antLoops--;
-            //}
         }
     }
 
     void SpawnPillarsAndAnts()
     {
-        //int rLocation;
         antPrefab.GetComponent<AntMovement>().waypoints = pillars;
         for (int i = 0; i < bTSP.pPositions.Length; i++)
         {
@@ -131,12 +122,6 @@ public class World_Controller : MonoBehaviour
                 }
             }
         }
-        //for (int i = 0; i < antAmount; i++)
-        //{
-        //    rLocation = Random.Range(0, pillars.Count);
-        //    antInstances.Add(Instantiate(antPrefab, pillars[rLocation].transform.position, Quaternion.identity));
-        //    antInstances[i].GetComponent<AntMovement>().newDestination = pillars[rLocation];
-        //}
     }
 
     void SpawnPillar()
@@ -158,10 +143,13 @@ public class World_Controller : MonoBehaviour
                         p.GetComponent<Edge_Controller>().edges.Add(new Edge(pillars[i], pillars[i].transform.position));
                     }
                     pillars.Add(p);
-                    shortestDistance = 999f;
+                    shortestDistance = 999999f;
                 }
                 antAttempts = 0;
+                antAmount = pillars.Count;
                 GameObject.Find("Number of Attempts").gameObject.GetComponent<UnityEngine.UI.Text>().text = "Number of Attempts = " + antAttempts;
+                GameObject.Find("Number of Pillars").gameObject.GetComponent<UnityEngine.UI.Text>().text = "Number of Pillars = " + pillars.Count;
+                runNN = true;
             }
         }
     }
@@ -196,32 +184,18 @@ public class World_Controller : MonoBehaviour
                     }
                 }
                 antAttempts = 0;
+                antAmount = pillars.Count;
                 GameObject.Find("Number of Attempts").gameObject.GetComponent<UnityEngine.UI.Text>().text = "Number of Attempts = " + antAttempts;
+                GameObject.Find("Number of Pillars").gameObject.GetComponent<UnityEngine.UI.Text>().text = "Number of Pillars = " + pillars.Count;
+                runNN = true;
             }
         }
     }
 
     public void SpawnAnts()
     {
-        //Debug.Log("YEET");
         if (pressButton == true)
         {
-            //GameObject antButton = GameObject.Find("Spawn Ants");
-            //antButton.GetComponentInChildren<UnityEngine.UI.Text>().fontSize = 8;
-            //antButton.gameObject.transform.localScale += new Vector3(2.0f, 1.0f, 0.0f);
-            //antButton.GetComponentInChildren<UnityEngine.UI.Text>().alignment = TextAnchor.MiddleLeft;
-            //antButton.GetComponentInChildren<UnityEngine.UI.Text>().text = "Enter amount of runs: \nPlease don't enter things that aren't numbers";
-            //string amountToRun = string.Empty;
-            //Debug.Log("YEET MA MEAT");
-            //foreach (char c in Input.inputString)
-            //{
-            //amountToRun += Input.inputString;
-            //}
-            //Debug.Log("YEET MA MEAT");
-            //antLoops = int.Parse(amountToRun);
-            //antButton.gameObject.transform.localScale += new Vector3(-2.0f, -1.0f, 0.0f);
-            //antButton.GetComponentInChildren<UnityEngine.UI.Text>().alignment = TextAnchor.MiddleCenter;
-            //antButton.GetComponentInChildren<UnityEngine.UI.Text>().fontSize = 14;
             GameObject.Find("Spawn Ants").GetComponentInChildren<UnityEngine.UI.Text>().text = "Cancel Ants";
             int rLocation;
             for (int i = 0; i < antAmount; i++)
@@ -234,8 +208,6 @@ public class World_Controller : MonoBehaviour
             spawnPillars = false;
             destroyPillars = false;
             runNN = false;
-            //buttons.enabled = false;
-            //antButton.GetComponentInChildren<UnityEngine.UI.Text>().text = "Cancel Ants";
         }
         else //If cancel ants is needed
         {
@@ -274,7 +246,6 @@ public class World_Controller : MonoBehaviour
         {
             float before = Time.realtimeSinceStartup;
             Neighbour[] traversers = new Neighbour[pillars.Count];
-            //float[] possibleDistances = new float[pillars.Count];
             float bestDistance = 99999f;
             for (int i = 0; i < pillars.Count; i++)
             {
@@ -284,9 +255,6 @@ public class World_Controller : MonoBehaviour
                     startPosition = pillars[i],
                     runTime = pillars.Count
                 };
-                //traversers[i].waypoints = pillars;
-                //traversers[i].startPosition = pillars[i];
-                //traversers[i].runTime = pillars.Count;
                 traversers[i].Move();
                 if (traversers[i].path < bestDistance)
                 {
@@ -294,20 +262,10 @@ public class World_Controller : MonoBehaviour
                 }
             }
             GameObject.Find("NN Best").GetComponentInChildren<UnityEngine.UI.Text>().text = "NN's Best Path = " + bestDistance;
-            //Debug.Log(bestDistance);
             runNN = false;
             float after = Time.realtimeSinceStartup;
             float duration = after - before;
-            GameObject.Find("NN").GetComponentInChildren<UnityEngine.UI.Text>().text = "Duration in milliseconds: " + duration;
-            //Debug.Log("Duration in milliseconds: " + duration);
+            GameObject.Find("Time taken for NN").GetComponentInChildren<UnityEngine.UI.Text>().text = "Duration in seconds: " + duration;
         }
-    }
-
-    public void CalculateFPS()
-    {
-        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-        //Debug.Log(deltaTime);
-        float fps = 1.0f / deltaTime;
-        GameObject.Find("FPS").GetComponentInChildren<UnityEngine.UI.Text>().text = "FPS (VSync Enabled) = " + Mathf.Ceil(fps).ToString();
     }
 }
